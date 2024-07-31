@@ -3,6 +3,7 @@ import axios from 'axios';
 import './weather.css';
 import Navbar from './components/Nav/Navbar';
 import Footer from './Footer';
+
 const API_KEY = '91f8e8693af6b370dfdfc29c4d6d1158';
 const API_URL = `https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
 
@@ -96,12 +97,12 @@ const WeatherApp = () => {
 
   return (
     <div className="App">
-    <Navbar/>
-    <div className="weather-app">
-      <h1 style={{ color: "#1a2a6c" }}>Real Time Weather Monitoring</h1> 
-      {renderWeather()}
-    </div>
-     <Footer/>
+      <Navbar />
+      <div className="weather-app">
+        <h1 style={{ color: "#1a2a6c" }}>Real Time Weather Monitoring</h1>
+        {renderWeather()}
+      </div>
+      <Footer />
     </div>
   );
 };
