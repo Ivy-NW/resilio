@@ -1,0 +1,16 @@
+[
+  { "lat": -1.286389, "lng": 36.817223, "name": "Kenya Red Cross", "type": "Shelter", "city": "Nairobi" },
+  { "lat": -1.283333, "lng": 36.816667, "name": "Nairobi Hospital", "type": "Hospital", "city": "Nairobi" },
+  { "lat": -1.292065, "lng": 36.821946, "name": "Nairobi Fire Station", "type": "Firehouse", "city": "Nairobi" },
+  { "lat": -1.283333, "lng": 36.816667, "name": "Central Police Station", "type": "Police Station", "city": "Nairobi" },
+
+  { "lat": -0.0917, "lng": 34.7674, "name": "Kisumu Shelter", "type": "Shelter", "city": "Kisumu" },
+  { "lat": -0.0911, "lng": 34.7681, "name": "Kisumu Hospital", "type": "Hospital", "city": "Kisumu" },
+  { "lat": -0.0919, "lng": 34.7691, "name": "Kisumu Fire Station", "type": "Firehouse", "city": "Kisumu" },
+  { "lat": -0.0920, "lng": 34.7672, "name": "Kisumu Police Station", "type": "Police Station", "city": "Kisumu" },
+
+  { "lat": -4.043477, "lng": 39.668206, "name": "Mombasa Shelter", "type": "Shelter", "city": "Mombasa" },
+  { "lat": -4.042252, "lng": 39.668896, "name": "Mombasa Hospital", "type": "Hospital", "city": "Mombasa" },
+  { "lat": -4.041810, "lng": 39.670152, "name": "Mombasa Fire Station", "type": "Firehouse", "city": "Mombasa" },
+  { "lat": -4.043100, "lng": 39.668000, "name": "Mombasa Police Station", "type": "Police Station", "city": "Mombasa" }
+]
