@@ -6,13 +6,15 @@ import { FaPhoneAlt } from 'react-icons/fa';
 import './emer.css';
 
 const emergencyContacts = [
-  { name: 'FEMA Disaster Assistance', number: '1-800-621-3362' },
-  { name: 'American Red Cross', number: '1-800-733-2767' },
-  { name: 'National Weather Service', number: '1-301-713-9142' },
-  { name: 'National Hurricane Center', number: '1-305-229-4470' },
-  { name: 'USGS Earthquake Hazards', number: '1-888-275-8747' },
-  { name: 'National Tsunami Warning', number: '1-888-851-9350' }
+  { name: 'Kenya Red Cross Society', number: '+254 711 072 000' },
+  { name: 'Kenya Police Service', number: '999' },
+  { name: 'Ambulance Services', number: '+254 702 300 000' },
+  { name: 'National Disaster Management Authority', number: '+254 202 041 252' },
+  { name: 'Fire Brigade', number: '+254 711 071 000' },
+  { name: 'Kenya Power and Lighting Company (for power outages)', number: '+254 711 111 000' },
+  { name: 'Kenya Meteorological Department', number: '+254 20 233 7890' }
 ];
+
 
 const EmergencyContacts = () => {
   return (

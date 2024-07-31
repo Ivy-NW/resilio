@@ -100,9 +100,9 @@
         <p>NB: The address will be used to identify the pickup location for the donated food items and clothing.</p>
         
         <div class="gift-box-container">
-            <div class="gift-box-item" onclick="showForm('Food and Water Box')">
-                <img src="logo2.jpg" alt="Food and Water Box" class="gift-box-image">
-                <h4>Food and Water Box</h4>
+            <div class="gift-box-item" onclick="showForm('Food Box')">
+                <img src="logo2.jpg" alt="Food Box" class="gift-box-image">
+                <h4>Food Box</h4>
                 <p>This box contains non-perishable food items and bottled water.</p>
                 <button class="donation-button">Donate Now</button>
             </div>
@@ -162,26 +162,21 @@
             event.preventDefault();
             const formData = new FormData(document.getElementById('donation-form'));
             const boxType = document.getElementById('form-heading').innerText.replace('Donate to ', '');
-            let endpoint = '';
-            let payload = {};
-
-            if (boxType === 'Money Box') {
-                endpoint = '/donate-money';
-                payload = {
-                    phoneNumber: formData.get('phoneNumber'),
-                    amount: formData.get('amount')
-                };
-            } else {
-                endpoint = '/donate-items';
-                payload = {
-                    boxType: boxType,
-                    address: formData.get('address'),
-                    phoneNumber: formData.get('phoneNumber')
-                };
+            
+            if (boxType !== 'Food Box' && boxType !== 'Clothing Box' && boxType !== 'Money Box') {
+                alert('Donation type not supported');
+                return;
             }
 
+            const payload = {
+                phoneNumber: formData.get('phoneNumber'),
+                boxType: boxType,
+                address: formData.get('address') || '',
+                amount: formData.get('amount') || ''
+            };
+
             try {
-                const response = await fetch(endpoint, {
+                const response = await fetch('/api/donate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
