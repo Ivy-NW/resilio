@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Gift Box Donation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #1a2a6c;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header #logo {
+            width: 100px;
+            height: auto;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .gift-box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gift-box-item {
+            width: 300px;
+            margin: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .gift-box-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .donation-button {
+            background-color: #3c64b1;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .donation-button:hover {
+            background-color: #2c4681;
+        }
+
+        .form-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .donate-without-money-container {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            background-color: #1a2a6c;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h3>Choose a Gift Box to Donate</h3>
+        <p>Each gift box contains essential items that will help disaster survivors get through the toughest times.</p>
+        <p>NB: The address will be used to identify the pickup location for the donated food items and clothing.</p>
+        
+        <div class="gift-box-container">
+            <div class="gift-box-item" onclick="showForm('Food and Water Box')">
+                <img src="logo2.jpg" alt="Food and Water Box" class="gift-box-image">
+                <h4>Food and Water Box</h4>
+                <p>This box contains non-perishable food items and bottled water.</p>
+                <button class="donation-button">Donate Now</button>
+            </div>
+
+            <div class="gift-box-item" onclick="showForm('Clothing Box')">
+                <img src="logo2.jpg" alt="Clothing Box" class="gift-box-image">
+                <h4>Clothing Box</h4>
+                <p>This box contains new or gently used clothing items and blankets.</p>
+                <button class="donation-button">Donate Now</button>
+            </div>
+
+            <div class="gift-box-item" onclick="showForm('Money Box')">
+                <img src="logo2.jpg" alt="Money Box" class="gift-box-image">
+                <h4>Money Box</h4>
+                <p>This box contains funds to be used during disasters and emergencies.</p>
+                <button class="donation-button">Donate Now</button>
+            </div>
+        </div>
+
+        <div id="donation-form-container" class="form-container" style="display: none;">
+            <form id="donation-form" onsubmit="handleSubmit(event)">
+                <h3 id="form-heading">Donate to</h3>
+                <div id="form-fields"></div>
+                <button type="submit" class="donation-button">Donate</button>
+            </form>
+            <div id="donate-without-money" class="donate-without-money-container" style="display: none;">
+                <p>If you don't have anything to donate, you can still help by volunteering or spreading awareness about the disaster.</p>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        function showForm(boxType) {
+            document.getElementById('donation-form-container').style.display = 'block';
+            document.getElementById('form-heading').innerText = `Donate to ${boxType}`;
+
+            let formFields = '';
+
+            if (boxType === 'Money Box') {
+                formFields = `
+                    <input type="text" name="phoneNumber" placeholder="Phone Number (e.g., 0712345678)" class="input-field" required>
+                    <input type="number" name="amount" placeholder="Amount (KES)" class="input-field" required>
+                `;
+                document.getElementById('donate-without-money').style.display = 'none';
+            } else {
+                formFields = `
+                    <input type="text" name="address" placeholder="Your Address" class="input-field" required>
+                    <input type="text" name="phoneNumber" placeholder="Phone Number (e.g., 0712345678)" class="input-field" required>
+                `;
+                document.getElementById('donate-without-money').style.display = 'block';
+            }
+
+            document.getElementById('form-fields').innerHTML = formFields;
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('donation-form'));
+            const boxType = document.getElementById('form-heading').innerText.replace('Donate to ', '');
+            let endpoint = '';
+            let payload = {};
+
+            if (boxType === 'Money Box') {
+                endpoint = '/donate-money';
+                payload = {
+                    phoneNumber: formData.get('phoneNumber'),
+                    amount: formData.get('amount')
+                };
+            } else {
+                endpoint = '/donate-items';
+                payload = {
+                    boxType: boxType,
+                    address: formData.get('address'),
+                    phoneNumber: formData.get('phoneNumber')
+                };
+            }
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Donation successful! A confirmation SMS has been sent.');
+                } else {
+                    alert('Donation failed. Please try again.');
+                }
+            } catch (error) {
+                alert('An error occurred. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
